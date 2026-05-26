@@ -1,0 +1,27 @@
+server:
+  port: ${WOPAN_DEMO_PORT:8080}
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+wopan:
+  # 登录后拿到的 access_token。浏览器重新登录沃盘后，旧 token 可能失效。
+  access-token: ${WOPAN_ACCESS_TOKEN:${WOPAN_ACCESS:}}
+  # 登录后拿到的 refresh_token。SDK 可用它自动刷新 access_token。
+  refresh-token: ${WOPAN_REFRESH_TOKEN:${WOPAN_REFRESH:}}
+  auto-refresh: ${WOPAN_AUTO_REFRESH:true}
+  # 上传目标目录 ID。根目录一般是 0；子目录 ID 可通过 listFiles 或网盘接口获取。
+  parent-id: ${WOPAN_PARENT_ID:0}
+  # PERSONAL 个人空间，FAMILY 家庭空间，PRIVATE 私密空间。
+  space-type: ${WOPAN_SPACE_TYPE:PERSONAL}
+  # 家庭空间上传时填写；不填时 SDK 会尝试获取默认家庭 ID。
+  family-id: ${WOPAN_FAMILY_ID:}
+  # 私密空间上传时填写，用于换取 psToken。
+  private-space-password: ${WOPAN_PRIVATE_SPACE_PASSWORD:}
+  # 通常不需要配置；只有代理、测试环境或接口域名变化时才覆盖。
+  base-url: ${WOPAN_BASE_URL:}
+  # 上传分区地址；通常 SDK 自动调用 getZoneInfo 获取。
+  zone-url: ${WOPAN_ZONE_URL:}

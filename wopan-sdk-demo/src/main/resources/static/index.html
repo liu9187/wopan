@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoPan SDK Demo</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="shell">
+    <section class="panel config-panel">
+        <div class="panel-title">
+            <div>
+                <p class="eyebrow">WoPan Java SDK</p>
+                <h1>图片上传与预览 Demo</h1>
+            </div>
+            <span id="statusBadge" class="badge">未配置</span>
+        </div>
+
+        <form id="configForm" class="grid-form">
+            <label>
+                <span>Access Token</span>
+                <input name="accessToken" autocomplete="off" placeholder="WOPAN_ACCESS_TOKEN">
+            </label>
+            <label>
+                <span>Refresh Token</span>
+                <input name="refreshToken" autocomplete="off" placeholder="WOPAN_REFRESH_TOKEN">
+            </label>
+            <label>
+                <span>目录 ID</span>
+                <input name="parentId" value="0" placeholder="0">
+            </label>
+            <label>
+                <span>空间类型</span>
+                <select name="spaceType">
+                    <option value="PERSONAL">个人空间</option>
+                    <option value="FAMILY">家庭空间</option>
+                    <option value="PRIVATE">私密空间</option>
+                </select>
+            </label>
+            <label>
+                <span>家庭 ID</span>
+                <input name="familyId" placeholder="家庭空间可填">
+            </label>
+            <label>
+                <span>私密空间密码</span>
+                <input name="privateSpacePassword" type="password" autocomplete="off" placeholder="私密空间可填">
+            </label>
+            <label>
+                <span>Base URL</span>
+                <input name="baseUrl" placeholder="默认使用 SDK 配置">
+            </label>
+            <label>
+                <span>Zone URL</span>
+                <input name="zoneUrl" placeholder="默认自动获取">
+            </label>
+            <label class="toggle-row">
+                <input name="autoRefresh" type="checkbox" checked>
+                <span>自动刷新 token</span>
+            </label>
+            <button class="primary" type="submit">保存配置</button>
+        </form>
+    </section>
+
+    <section class="panel login-panel">
+        <div>
+            <h2>手机号登录获取 Token</h2>
+            <form id="loginForm" class="login-form">
+                <label>
+                    <span>手机号</span>
+                    <input name="phone" autocomplete="username" placeholder="沃网盘手机号">
+                </label>
+                <label>
+                    <span>密码</span>
+                    <input name="password" type="password" autocomplete="current-password" placeholder="沃网盘密码">
+                </label>
+                <label>
+                    <span>图形验证码</span>
+                    <input name="verifyCode" autocomplete="off" maxlength="4" placeholder="需要时填写">
+                </label>
+                <div class="captcha-row">
+                    <img id="captchaImage" alt="图形验证码">
+                    <button id="refreshCaptchaButton" class="secondary" type="button">换一张</button>
+                </div>
+                <input name="uuid" type="hidden">
+                <button id="sendSmsButton" class="secondary" type="button">发送短信验证码</button>
+                <label>
+                    <span>短信验证码</span>
+                    <input name="smsCode" autocomplete="one-time-code" placeholder="6 位验证码">
+                </label>
+                <button id="confirmLoginButton" class="primary" type="button">确认登录并写入配置</button>
+            </form>
+        </div>
+        <div class="token-result">
+            <h2>登录结果</h2>
+            <p id="loginMessage" class="message">还没有获取 token</p>
+            <div class="token-grid">
+                <label>
+                    <span>Access Token</span>
+                    <input id="loginAccessToken" readonly>
+                </label>
+                <label>
+                    <span>Refresh Token</span>
+                    <input id="loginRefreshToken" readonly>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel upload-panel">
+        <div class="upload-card">
+            <input id="imageInput" type="file" accept="image/*">
+            <label for="imageInput" id="dropZone" class="drop-zone">
+                <span class="drop-icon">+</span>
+                <strong>选择图片</strong>
+                <small>支持 jpg、png、gif、webp，最大 50MB</small>
+            </label>
+            <button id="uploadButton" class="primary upload-button" type="button" disabled>上传到网盘</button>
+            <p id="message" class="message"></p>
+        </div>
+
+        <div class="preview-grid">
+            <article>
+                <h2>本地预览</h2>
+                <div class="preview-box">
+                    <img id="localPreview" alt="">
+                    <span id="localEmpty">还没有选择图片</span>
+                </div>
+            </article>
+            <article>
+                <h2>网盘预览</h2>
+                <div class="preview-box">
+                    <img id="remotePreview" alt="">
+                    <span id="remoteEmpty">上传成功后显示</span>
+                </div>
+                <a id="previewLink" target="_blank" rel="noreferrer">打开原图链接</a>
+            </article>
+        </div>
+    </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
